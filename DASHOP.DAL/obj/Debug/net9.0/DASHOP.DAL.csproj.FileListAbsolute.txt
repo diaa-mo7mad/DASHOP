@@ -12,3 +12,4 @@ D:\asp12\T_project\DASHOP\DASHOP.DAL\obj\Debug\net9.0\refint\DASHOP.DAL.dll
 D:\asp12\T_project\DASHOP\DASHOP.DAL\obj\Debug\net9.0\DASHOP.DAL.pdb
 D:\asp12\T_project\DASHOP\DASHOP.DAL\obj\Debug\net9.0\DASHOP.DAL.genruntimeconfig.cache
 D:\asp12\T_project\DASHOP\DASHOP.DAL\obj\Debug\net9.0\ref\DASHOP.DAL.dll
+D:\asp12\T_project\DASHOP\DASHOP.DAL\obj\Debug\net9.0\DASHOP.DAL.sourcelink.json

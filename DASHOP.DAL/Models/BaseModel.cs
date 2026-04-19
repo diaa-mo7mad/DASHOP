@@ -11,7 +11,7 @@ namespace DASHOP.DAL.Models
 
         public int Id { get; set; }
 
-        public Status status { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public Status status { get; set; } = Status.Active;
+        public DateTime CreatedAt { get; set; }=DateTime.UtcNow;
     }
 }

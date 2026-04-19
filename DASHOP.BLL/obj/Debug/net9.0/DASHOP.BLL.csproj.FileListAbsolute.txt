@@ -13,3 +13,4 @@ D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.dll
 D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\refint\DASHOP.BLL.dll
 D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.pdb
 D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\ref\DASHOP.BLL.dll
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.sourcelink.json

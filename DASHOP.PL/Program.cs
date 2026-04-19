@@ -1,5 +1,7 @@
 
+using DASHOP.BLL.Service;
 using DASHOP.DAL.Data;
+using DASHOP.DAL.Repository;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -44,8 +46,9 @@ namespace DASHOP.PL
                     QueryStringKey = "lang"
                 });
             });
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-          
             var app = builder.Build();
             app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 

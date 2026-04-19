@@ -1666,7 +1666,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
-          "DASHOP.DAL": "1.0.0"
+          "DASHOP.DAL": "1.0.0",
+          "Mapster": "7.4.0"
         },
         "compile": {
           "bin/placeholder/DASHOP.BLL.dll": {}

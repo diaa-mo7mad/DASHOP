@@ -175,3 +175,4 @@ D:\asp12\T_project\DASHOP\DASHOP.PL\obj\Debug\net9.0\ar\DASHOP.PL.resources.dll
 D:\asp12\T_project\DASHOP\DASHOP.PL\bin\Debug\net9.0\Mapster.dll
 D:\asp12\T_project\DASHOP\DASHOP.PL\bin\Debug\net9.0\Mapster.Core.dll
 D:\asp12\T_project\DASHOP\DASHOP.PL\bin\Debug\net9.0\Scalar.AspNetCore.dll
+D:\asp12\T_project\DASHOP\DASHOP.PL\obj\Debug\net9.0\DASHOP.PL.sourcelink.json

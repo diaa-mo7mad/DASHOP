@@ -1058,7 +1058,8 @@
       },
       "DASHOP.BLL/1.0.0": {
         "dependencies": {
-          "DASHOP.DAL": "1.0.0"
+          "DASHOP.DAL": "1.0.0",
+          "Mapster": "10.0.7"
         },
         "runtime": {
           "DASHOP.BLL.dll": {
