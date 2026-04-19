@@ -1,0 +1,6 @@
+@DASHOP.PL_HostAddress = http://localhost:5019
+
+GET {{DASHOP.PL_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

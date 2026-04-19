@@ -1,0 +1,15 @@
+D:\asp12\T_project\DASHOP\DASHOP.BLL\bin\Debug\net9.0\DASHOP.BLL.deps.json
+D:\asp12\T_project\DASHOP\DASHOP.BLL\bin\Debug\net9.0\DASHOP.BLL.dll
+D:\asp12\T_project\DASHOP\DASHOP.BLL\bin\Debug\net9.0\DASHOP.BLL.pdb
+D:\asp12\T_project\DASHOP\DASHOP.BLL\bin\Debug\net9.0\DASHOP.DAL.dll
+D:\asp12\T_project\DASHOP\DASHOP.BLL\bin\Debug\net9.0\DASHOP.DAL.pdb
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.csproj.AssemblyReference.cache
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.GeneratedMSBuildEditorConfig.editorconfig
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.AssemblyInfoInputs.cache
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.AssemblyInfo.cs
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.csproj.CoreCompileInputs.cache
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.csproj.Up2Date
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.dll
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\refint\DASHOP.BLL.dll
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\DASHOP.BLL.pdb
+D:\asp12\T_project\DASHOP\DASHOP.BLL\obj\Debug\net9.0\ref\DASHOP.BLL.dll
