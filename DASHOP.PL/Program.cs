@@ -1,18 +1,27 @@
 
 using DASHOP.BLL.Service;
 using DASHOP.DAL.Data;
+using DASHOP.DAL.Models;
 using DASHOP.DAL.Repository;
+using DASHOP.DAL.Utils;
+using Mapster;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 using System.Globalization;
+using System.Text;
 
 namespace DASHOP.PL
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -20,23 +29,78 @@ namespace DASHOP.PL
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+            builder.Services.AddOpenApi(options =>
+            {
+                options.AddDocumentTransformer((document, context, cancellationToken) =>
+                {
+                   
+                    var securityScheme = new OpenApiSecurityScheme
+                    {
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.Http,
+                        Scheme = "Bearer",
+                        BearerFormat = "JWT",
+                        In = ParameterLocation.Header,
+                        Description = "add the token without bearer"
+                    };
+
+                    
+                    document.Components ??= new OpenApiComponents();
+                    document.Components.SecuritySchemes.Add("Bearer", securityScheme);
+
+                   
+                    document.SecurityRequirements ??= new List<OpenApiSecurityRequirement>();
+                    document.SecurityRequirements.Add(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                Array.Empty<string>()
+            }
+        });
+
+                    return Task.CompletedTask;
+                });
+            });
             builder.Services.AddLocalization(options => options.ResourcesPath = "");
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
+            {
+               
+                Options.Password.RequireDigit = true;
+                Options.Password.RequireLowercase = true;
+                Options.Password.RequireNonAlphanumeric = true;
+                Options.Password.RequireUppercase = true;
+                Options.Password.RequiredLength = 6;
+                Options.User.RequireUniqueEmail = true;
+                Options.Lockout.MaxFailedAccessAttempts = 5;
+                Options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                Options.SignIn.RequireConfirmedAccount = true;
 
-    
-                const string defaultCulture = "en-GB";
+            })
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+                     .AddDefaultTokenProviders();
+
+
+            const string defaultCulture = "en";
             var supportedCultures = new[]
             {
                      new CultureInfo(defaultCulture),
                          new CultureInfo("ar")
-                        
+
                };
 
-            builder.Services.Configure<RequestLocalizationOptions>(options => {
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
                 options.DefaultRequestCulture = new RequestCulture(defaultCulture);
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
@@ -48,6 +112,28 @@ namespace DASHOP.PL
             });
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ISeedData, RoleSeedData>();
+            builder.Services.AddScoped<ISeedData, UserSeedData>();
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+            builder.Services.AddAuthentication(opt => {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+             {
+                  options.TokenValidationParameters = new TokenValidationParameters
+             {
+                 ValidateIssuer = true,
+                 ValidateAudience = true,
+                 ValidateLifetime = true,
+                  ValidateIssuerSigningKey = true,
+                 ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                 ValidAudience = builder.Configuration["Jwt:Audience"],
+                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+             };
+                 });
 
             var app = builder.Build();
             app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
@@ -59,8 +145,9 @@ namespace DASHOP.PL
                 app.MapScalarApiReference(options =>
                 {
                     options.WithTitle("DASHOP API v1")
-                           .WithTheme(ScalarTheme.Moon) 
-                           .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+                           .WithTheme(ScalarTheme.Moon)
+                           .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
+                           .AddPreferredSecuritySchemes("Bearer"); 
                 });
 
             }
@@ -69,10 +156,22 @@ namespace DASHOP.PL
 
             app.UseAuthorization();
 
+            using (var scope = app.Services.CreateScope())
+            {
 
-            app.MapControllers();
+                var Services = scope.ServiceProvider;
+                var seeders = Services.GetServices<ISeedData>();
+                foreach (var seeder in seeders)
+                {
+                    await seeder.DataSeed();
 
-            app.Run();
+                }
+
+
+                app.MapControllers();
+
+                app.Run();
+            }
         }
     }
 }
